@@ -1,38 +1,34 @@
-# .github/workflows/ci.yml
-
 name: CI for Sample Project
 
-# このワークフローを実行するトリガー
 on:
   push:
     branches:
-      - main  # mainブランチへのプッシュ時に実行
+      - main
   pull_request:
     branches:
-      - main  # mainブランチへのプルリクエスト時に実行
+      - main
 
-# ジョブの定義
 jobs:
   test:
-    runs-on: ubuntu-latest  # GitHub Actionsで利用するランナー（環境）
+    runs-on: ubuntu-latest
 
     steps:
-      # リポジトリのチェックアウト
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Pythonをセットアップ
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.13.0'  # 使用するPythonのバージョン
+          python-version: '3.13.0'
 
-      # 必要なパッケージのインストール
+      # PYTHONPATH をリポジトリのルートに設定
+      - name: Set PYTHONPATH
+        run: echo "PYTHONPATH=${{ github.workspace }}" >> $GITHUB_ENV
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pytest
 
-      # テストの実行
       - name: Run tests
-        run: pytest  # pytestを実行
+        run: pytest
