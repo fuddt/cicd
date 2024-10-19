@@ -1,7 +1,7 @@
 import os
 import tempfile
 import datetime
-from cicd.app.sample import rename_files_in_dir, _get_date_created
+from app.sample import rename_files_in_dir, _get_date_created
 
 def test_get_date_created():
     # 一時ファイルを作成して、その作成日時を取得
